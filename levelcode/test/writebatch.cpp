@@ -21,19 +21,16 @@ void getnextnumber(char *num){
 int main(int argc, char **argv){
 	WriteBatch batch;
 	DB *db;
-	Options options
+	Options options;
 	options.create_if_missing = true;
 	string dbpath = "testdb";
 	Status status = DB::Open(options, dbpath, &db);
 	if(status.ok()){
 		//使用WriteBatch批量删除数据
 		if(argc == 2 && strcmp(argv[1], "del") == 0){
-			char num[10];
-			bzero(num, sizeof(num));
-			num[0] = '0';
-			while(num[6] != '1'){
-				batch.Delete(num);
-				getnextnumber(num);
+			Iterator *it = db->NewIterator(ReadOptions());
+			for(it->SeekToFirst(); it->Valid(); it->Next()){
+				batch.Delete(it->key());
 			}
 		}
 		else{
@@ -42,7 +39,7 @@ int main(int argc, char **argv){
 			char num[10];
 			bzero(num, sizeof(num));
 			num[0] = '0';
-			while(num[6] != '1'){
+			while(num[3] != '1'){
 				batch.Put(num, num);
 				getnextnumber(num);
 			}

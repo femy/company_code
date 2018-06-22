@@ -17,19 +17,12 @@ int main(void){
 			cout<<it->key().ToString()<<":"
 			    <<it->value().ToString()<<endl;
 		}
-		cout<<"显示指定范围内的数据:"<<endl;
-		for(it->Seek("800000");
-		    it->Valid();
-		    it->Next())
-		{
-			cout<<it->key().ToString()<<":"
-			    <<it->value().ToString()<<endl;
-		}
 		if(!it->status().ok()){
 			cout<<"error"<<endl;
 		}
 		delete it;
 	}
+	delete db;
 	return 0;
 }
 
