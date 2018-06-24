@@ -57,8 +57,7 @@ int main(int argc, char **argv){
 				size_t klen;
 				key = leveldb_iter_key(it, &klen);
 				if(klen > 0 && key != NULL){
-					((char*)key)[klen] = 0;
-					leveldb_writebatch_delete(batch, key, strlen(key));
+					leveldb_writebatch_delete(batch, key, klen);
 				}
 				leveldb_iter_next(it);
 			}
